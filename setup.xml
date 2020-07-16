@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="mbs/setup2html.xsl"?>
+
+<muhkuh_buildsystem group="org.muhkuh.lua" module="uart">
+	<project_version>1.0.0</project_version>
+
+	<scons>
+		<group>org.scons</group>
+		<name>scons-local</name>
+		<package>scons-local</package>
+		<version>3.1.2_1</version>
+		<typ>tar.bz2</typ>
+	</scons>
+
+	<tools>
+		<tool>
+			<group>nz.co.methods</group>
+			<name>asciidoc</name>
+			<package>asciidoc</package>
+			<version>9.0.0_1</version>
+			<typ>tar.bz2</typ>
+		</tool>
+		<tool>
+			<group>org.gnu.gcc</group>
+			<name>gcc-arm-none-eabi</name>
+			<package>gcc-arm-none-eabi_${platform}_${machine}</package>
+			<version>4.7.2_3</version>
+			<typ>tar.bz2</typ>
+		</tool>
+		<tool>
+			<group>org.gnu.gcc</group>
+			<name>gcc-arm-none-eabi</name>
+			<package>gcc-arm-none-eabi_${platform}_${machine}</package>
+			<version>4.9.3_4</version>
+			<typ>tar.bz2</typ>
+		</tool>
+	</tools>
+</muhkuh_buildsystem>
