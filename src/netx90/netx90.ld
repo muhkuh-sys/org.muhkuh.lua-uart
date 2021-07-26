@@ -58,7 +58,7 @@ SECTIONS
 	.parameter :
 	{
 		parameter_start_address = . ;
-		KEEP(*(.parameter))
+		. = . + 0x1000;
 		parameter_end_address = . ;
 	} >INTRAM
 
