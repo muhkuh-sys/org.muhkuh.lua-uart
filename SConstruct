@@ -80,6 +80,7 @@ sources_common = """
 aCppPath = ['src', '#platform/src', '#platform/src/lib', '#targets/version']
 
 env_netx4000_t = atEnv.NETX4000.Clone()
+env_netx4000_t.CompileDb('targets/netx4000/compile_commands.json')
 env_netx4000_t.Replace(LDFILE = 'src/netx4000/netx4000.ld')
 env_netx4000_t.Append(CPPPATH = aCppPath)
 src_netx4000_t = env_netx4000_t.SetBuildPath('targets/netx4000', 'src', sources_common)
