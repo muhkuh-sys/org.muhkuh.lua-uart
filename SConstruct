@@ -46,9 +46,8 @@ env_cortexR7 = atEnv.DEFAULT.CreateEnvironment(['gcc-arm-none-eabi-4.9', 'asciid
 env_cortexR7.CreateCompilerEnv('NETX4000', ['arch=armv7', 'thumb'], ['arch=armv7-r', 'thumb'])
 
 # Create a build environment for the Cortex-M4 based netX chips.
-#env_cortexM4 = atEnv.DEFAULT.CreateEnvironment(['gcc-arm-none-eabi-4.9', 'asciidoc'])
-#env_cortexM4.CreateCompilerEnv('NETX90_MPW', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
-#env_cortexM4.CreateCompilerEnv('NETX90', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
+env_cortexM4 = atEnv.DEFAULT.CreateEnvironment(['gcc-arm-none-eabi-4.9', 'asciidoc'])
+env_cortexM4.CreateCompilerEnv('NETX90', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
 
 
 # ---------------------------------------------------------------------------
@@ -74,6 +73,9 @@ sources_common = """
     src/header.c
     src/init.S
     src/main_test.c
+"""
+
+sources_netx4000 = """
     src/portcontrol.c
 """
 
@@ -83,10 +85,19 @@ env_netx4000_t = atEnv.NETX4000.Clone()
 env_netx4000_t.CompileDb('targets/netx4000/compile_commands.json')
 env_netx4000_t.Replace(LDFILE = 'src/netx4000/netx4000.ld')
 env_netx4000_t.Append(CPPPATH = aCppPath)
-src_netx4000_t = env_netx4000_t.SetBuildPath('targets/netx4000', 'src', sources_common)
+src_netx4000_t = env_netx4000_t.SetBuildPath('targets/netx4000', 'src', sources_common+sources_netx4000)
 elf_netx4000_t = env_netx4000_t.Elf('targets/netx4000/uart_netx4000.elf', src_netx4000_t + env_netx4000_t['PLATFORM_LIBRARY'])
 UART_NETX4000 = env_netx4000_t.ObjCopy('targets/netx4000/uart_netx4000.bin', elf_netx4000_t)
 txt_netx4000_t = env_netx4000_t.ObjDump('targets/netx4000/uart_netx4000.txt', elf_netx4000_t, OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
+
+env_netx90_t = atEnv.NETX90.Clone()
+env_netx90_t.CompileDb('targets/netx90/compile_commands.json')
+env_netx90_t.Replace(LDFILE = 'src/netx90/netx90.ld')
+env_netx90_t.Append(CPPPATH = aCppPath)
+src_netx90_t = env_netx90_t.SetBuildPath('targets/netx90', 'src', sources_common)
+elf_netx90_t = env_netx90_t.Elf('targets/netx90/uart_netx90.elf', src_netx90_t + env_netx90_t['PLATFORM_LIBRARY'])
+UART_NETX90 = env_netx90_t.ObjCopy('targets/netx90/uart_netx90.bin', elf_netx90_t)
+txt_netx90_t = env_netx90_t.ObjDump('targets/netx90/uart_netx90.txt', elf_netx90_t, OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
 
 LUA_MODULE = atEnv.NETX4000.GccSymbolTemplate('targets/lua/uart_netx.lua', elf_netx4000_t, GCCSYMBOLTEMPLATE_TEMPLATE=File('templates/uart_netx.lua'))
 
@@ -142,7 +153,8 @@ strArtifact0 = 'uart'
 
 tArcList0 = atEnv.DEFAULT.ArchiveList('zip')
 tArcList0.AddFiles('netx/',
-    UART_NETX4000)
+    UART_NETX4000,
+    UART_NETX90)
 tArcList0.AddFiles('lua/',
     LUA_MODULE)
 #tArcList0.AddFiles('doc/',
@@ -163,7 +175,8 @@ tArtifact0Pom = atEnv.DEFAULT.ArtifactVersion(os.path.join(strModulePath, '%s-%s
 #
 # Copy all binary binaries.
 atFiles = {
-    'targets/testbench/netx/uart_netx4000.bin':   UART_NETX4000,
+    'targets/testbench/netx/uart_netx4000.bin':    UART_NETX4000,
+    'targets/testbench/netx/uart_netx90.bin':      UART_NETX4000,
     'targets/testbench/lua/uart_netx.lua':         LUA_MODULE
 }
 for tDst, tSrc in atFiles.items():
