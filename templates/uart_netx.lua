@@ -122,7 +122,9 @@ function UartNetx:initialize(tPlugin)
   local tAsicTyp = tPlugin:GetChiptyp()
   local strBinary = astrBinaryName[tAsicTyp]
   if strBinary==nil then
-    error('No binary for chip type %s.', tAsicTyp)
+    local strMsg = string.format('No binary for chip type %s.', tAsicTyp)
+    tLog.error(strMsg)
+    error(strMsg)
   end
   local strNetxBinary = string.format('netx/uart_netx%s.bin', strBinary)
   tLog.debug('Loading binary "%s"...', strNetxBinary)
