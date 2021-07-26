@@ -14,10 +14,10 @@
 	</info>
 	<dependencies>
 		<dependency group="org.lua" module="lua" artifact="lua" version="5.4"/>
-		<dependency group="br.puc-rio.inf.www.roberto" module="lpeg" artifact="lua5.4-lpeg" version="1.0"/>
+		<dependency group="com.github.sqmedeiros" module="lpeglabel" artifact="lua5.4-lpeglabel" version="1.6"/>
 	</dependencies>
 	<dependencies>
 		<dependency group="org.lua" module="lua" artifact="lua" version="5.1"/>
-		<dependency group="br.puc-rio.inf.www.roberto" module="lpeg" artifact="lua5.1-lpeg" version="1.0"/>
+		<dependency group="com.github.sqmedeiros" module="lpeglabel" artifact="lua5.1-lpeglabel" version="1.6"/>
 	</dependencies>
 </jonchki-artifact>

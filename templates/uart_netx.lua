@@ -16,7 +16,7 @@ function UartNetx:_init(tLog)
   self.UART_HANDLE_SIZE = ${SIZEOF_UART_HANDLE_STRUCT}
 
   self.romloader = require 'romloader'
-  self.lpeg = require 'lpeg'
+  self.lpeg = require 'lpeglabel'
   self.pl = require'pl.import_into'()
 
   self.tLog = tLog
