@@ -714,7 +714,6 @@ static TEST_RESULT_T processCommandOpen(unsigned long ulVerbose, UART_PARAMETER_
 	unsigned int uiIdx;
 #endif
 
-
 	/* Check the parameter. */
 	tResult = TEST_RESULT_ERROR;
 	ulCore = ptParameter->ulUartCore;
@@ -722,7 +721,7 @@ static TEST_RESULT_T processCommandOpen(unsigned long ulVerbose, UART_PARAMETER_
 	/* Is the core number valid? */
 	if( ulCore>=(sizeof(atUartInstances)/sizeof(atUartInstances[0])) )
 	{
-		uprintf("The UART core number %d is invalid on the host %s.", ulCore, HOSTNAME);
+		uprintf("The UART core number %d is invalid on the host %s.\n", ulCore, HOSTNAME);
 	}
 	else
 	{
@@ -765,8 +764,8 @@ static TEST_RESULT_T processCommandOpen(unsigned long ulVerbose, UART_PARAMETER_
 
 			if( ulVerbose!=0 )
 			{
-				/* Setup the UARTs. */
-				uprintf("Setup UART %d with %d baud (native 0x%04x) and\n", ulCore, ulBaudRate, ulCurrentDeviceSpecificSpeedValue);
+				/* Setup the UART. */
+				uprintf("Setup UART %d with %d baud (native 0x%04x).\n", ulCore, ulBaudRate, ulCurrentDeviceSpecificSpeedValue);
 			}
 #if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 			for(uiCnt=0; uiCnt<4; uiCnt++)
@@ -1017,7 +1016,7 @@ TEST_RESULT_T test(UART_PARAMETER_T *ptTestParams)
 
 		/* Get the test parameter. */
 		uprintf(". Parameters: 0x%08x\n", (unsigned long)ptTestParams);
-		uprintf(".   Verbose: 0x%08x\n", ptTestParams->ulVerbose);
+		uprintf(".    Verbose: 0x%08x\n", ptTestParams->ulVerbose);
 	}
 
 	tCmd = (UART_CMD_T)(ptTestParams->ulCommand);
