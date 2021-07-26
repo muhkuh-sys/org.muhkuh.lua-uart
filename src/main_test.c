@@ -678,6 +678,7 @@ static const UART_INSTANCE_T atUartInstances[] =
 
 
 
+#if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 static const char *apcPinOrder[4] =
 {
 	"RX",
@@ -685,6 +686,7 @@ static const char *apcPinOrder[4] =
 	"RTS",
 	"CTS"
 };
+#endif
 
 
 
@@ -699,10 +701,12 @@ static TEST_RESULT_T processCommandOpen(unsigned long ulVerbose, UART_PARAMETER_
 	unsigned long ulValue;
 	unsigned long ulBaudRate;
 	unsigned long ulCurrentDeviceSpecificSpeedValue;
+#if ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 	unsigned long ulPortControl;
+#endif
+#if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 	unsigned int uiCnt;
 	const char *pcName;
-#if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 	HOSTDEF(ptAsicCtrlArea);
 	HOSTDEF(ptMmioCtrlArea);
 #elif ASIC_TYP==ASIC_TYP_NETX500
@@ -759,16 +763,18 @@ static TEST_RESULT_T processCommandOpen(unsigned long ulVerbose, UART_PARAMETER_
 			/* Enable the UART. */
 			ptUartArea->ulUartcr = HOSTMSK(uartcr_uartEN);
 
-#if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 			if( ulVerbose!=0 )
 			{
-				/* Setup the MMIOs. */
+				/* Setup the UARTs. */
 				uprintf("Setup UART %d with %d baud (native 0x%04x) and\n", ulCore, ulBaudRate, ulCurrentDeviceSpecificSpeedValue);
 			}
+#if ASIC_TYP==ASIC_TYP_NETX10 || ASIC_TYP==ASIC_TYP_NETX50 || ASIC_TYP==ASIC_TYP_NETX56 || ASIC_TYP==ASIC_TYP_NETX6 || ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 			for(uiCnt=0; uiCnt<4; uiCnt++)
 			{
 				ulValue = ptParameter->aucMMIO[uiCnt];
+#       if ASIC_TYP==ASIC_TYP_NETX4000 || ASIC_TYP==ASIC_TYP_NETX4000_RELAXED
 				ulPortControl = ptParameter->ausPortcontrol[uiCnt];
+#       endif
 
 				if( ulVerbose!=0 )
 				{
